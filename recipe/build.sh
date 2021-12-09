@@ -2,6 +2,12 @@
 
 set -euxo pipefail
 
+if [[ $target_platform == osx-arm64 ]]; then
+	cross_args="-DSTACK_DIRECTION=-1"
+else
+	cross_args=""
+fi
+
 mkdir build
 pushd build
 cmake ${CMAKE_ARGS} \
@@ -11,6 +17,7 @@ cmake ${CMAKE_ARGS} \
 	-DMYSQLCLIENT_STATIC_LINKING=OFF \
 	-DBUNDLE_DEPENDENCIES=OFF \
 	-DDISABLE_GUI=ON \
+	$cross_args \
 	..
 ninja
 # Manually install libraries as `ninja install` also installs the tests
