@@ -15,7 +15,6 @@ cmake ${CMAKE_ARGS} \
 	-DMYSQLCLIENT_STATIC_LINKING=OFF \
 	-DBUNDLE_DEPENDENCIES=OFF \
 	-DDISABLE_GUI=ON \
-	$cross_args \
 	..
 ninja
 # Manually install libraries as `ninja install` also installs the tests
