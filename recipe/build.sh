@@ -3,9 +3,7 @@
 set -euxo pipefail
 
 if [[ $target_platform == osx-arm64 ]]; then
-	cross_args="-DSTACK_DIRECTION=-1"
-else
-	cross_args=""
+    CMAKE_ARGS="${CMAKE_ARGS} -DSTACK_DIRECTION=-1 -DHAVE_CLOCK_GETTIME=0 -DHAVE_CLOCK_GETTIME=0"
 fi
 
 mkdir build
