@@ -52,6 +52,9 @@ if [[ $target_platform == osx-arm64 ]] && [[ $CONDA_BUILD_CROSS_COMPILATION == 1
     _cmake_args+=(-DHAVE_CLOCK_REALTIME_EXITCODE=0 -DHAVE_CLOCK_REALTIME_EXITCODE__TRYRUN_OUTPUT="")
 fi
 
+# Ensure we don't pick up mysql from BUILD_PREFIX in the target case
+rm -f ${BUILD_PREFIX}/bin/mysql_config
+
 mkdir build
 pushd build
 cmake "${_cmake_args[@]}"
