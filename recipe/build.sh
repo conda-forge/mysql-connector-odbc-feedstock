@@ -30,11 +30,10 @@ if [[ $target_platform == osx-arm64 ]] && [[ $CONDA_BUILD_CROSS_COMPILATION == 1
             -DMYSQL_LIB=fake.so \
             -DODBC_CONFIG=fake
     cmake --build build.codegen -- \
-        mysql_strings
+        uca9dump
 
     # Put the codegen binaries in $PATH
-    export PATH=$SRC_DIR/build.codegen/runtime_output_directory:$PATH
-    export PATH=$SRC_DIR/build.codegen/router/src/json_schema_embedder:$PATH
+    export PATH=build.codegen/bin:$PATH
 
     # Tell CMake about our cross toolchains
     _cmake_args+=(${CMAKE_ARGS})
