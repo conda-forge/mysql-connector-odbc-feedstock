@@ -33,8 +33,7 @@ if [[ $target_platform == osx-arm64 ]] && [[ $CONDA_BUILD_CROSS_COMPILATION == 1
         uca9dump
 
     # Copy uca9dump to target build directory to prevent it from being built again
-    mkdir -p build/bin
-    cp build.codegen/bin/uca9dump build/bin
+    cp build.codegen/bin/uca9dump ${BUILD_PREFIX}/bin
 
     # Tell CMake about our cross toolchains
     _cmake_args+=(${CMAKE_ARGS})
