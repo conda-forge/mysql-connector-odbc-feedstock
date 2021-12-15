@@ -30,7 +30,7 @@ if [[ $target_platform == osx-arm64 ]] && [[ $CONDA_BUILD_CROSS_COMPILATION == 1
             -DMYSQL_LIB=fake.so \
             -DODBC_CONFIG=fake
     cmake --build build.codegen -- \
-        uca9dump
+        mysql_strings
 
     # Put the codegen binaries in $PATH
     export PATH=$SRC_DIR/build.codegen/runtime_output_directory:$PATH
