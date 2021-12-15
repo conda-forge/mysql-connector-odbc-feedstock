@@ -32,8 +32,9 @@ if [[ $target_platform == osx-arm64 ]] && [[ $CONDA_BUILD_CROSS_COMPILATION == 1
     cmake --build build.codegen -- \
         uca9dump
 
-    # Put the codegen binaries in $PATH
-    export PATH=build.codegen/bin:$PATH
+    # Copy uca9dump to target build directory to prevent it from being built again
+    mkdir -p build/bin
+    cp build.codegen/bin/uca9dump build/bin
 
     # Tell CMake about our cross toolchains
     _cmake_args+=(${CMAKE_ARGS})
@@ -56,7 +57,7 @@ fi
 # Ensure we don't pick up mysql from BUILD_PREFIX in the target case
 rm -f ${BUILD_PREFIX}/bin/mysql_config
 
-mkdir build
+mkdir -p build
 pushd build
 cmake "${_cmake_args[@]}"
 ninja
