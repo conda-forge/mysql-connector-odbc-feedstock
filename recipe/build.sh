@@ -30,7 +30,8 @@ if [[ $target_platform == osx-arm64 ]] && [[ $CONDA_BUILD_CROSS_COMPILATION == 1
             -DMYSQL_LIB=fake.so \
             -DODBC_CONFIG=fake
     cmake --build build.codegen -- \
-        uca9dump
+        uca9dump \
+        myodbc-installer
 
     # Copy uca9dump to target build directory to prevent it from being built again
     cp build.codegen/bin/uca9dump ${BUILD_PREFIX}/bin
