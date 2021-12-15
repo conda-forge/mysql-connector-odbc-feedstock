@@ -47,9 +47,11 @@ if [[ $target_platform == osx-arm64 ]] && [[ $CONDA_BUILD_CROSS_COMPILATION == 1
     ## Tell the build system that stack grows in the opposite direction on osx-arm64
     _cmake_args+=(-DSTACK_DIRECTION=-1)
 
+    _cmake_args+=(-DHAVE_LLVM_LIBCPP=1)
+
     ## 11.1 SDK does support CLOCK_GETTIME with CLOCK_MONOTONIC and CLOCK_REALTIME as arguments
-    _cmake_args+=(-DHAVE_CLOCK_GETTIME_EXITCODE=0 -DHAVE_CLOCK_GETTIME_EXITCODE__TRYRUN_OUTPUT="")
-    _cmake_args+=(-DHAVE_CLOCK_REALTIME_EXITCODE=0 -DHAVE_CLOCK_REALTIME_EXITCODE__TRYRUN_OUTPUT="")
+    _cmake_args+=(-DHAVE_CLOCK_GETTIME=0)
+    _cmake_args+=(-DHAVE_CLOCK_REALTIME=0)
 fi
 
 # Ensure we don't pick up mysql from BUILD_PREFIX in the target case
