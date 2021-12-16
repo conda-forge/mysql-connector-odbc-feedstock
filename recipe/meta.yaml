@@ -19,6 +19,7 @@ requirements:
     - ninja
     - {{ compiler('cxx') }}
     - {{ compiler('c') }}
+    - unixodbc
     - mysql-devel {{ version }}  # [build_platform != target_platform]
   host:
     - unixodbc
