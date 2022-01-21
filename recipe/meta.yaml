@@ -20,6 +20,7 @@ requirements:
     - {{ compiler('cxx') }}
     - {{ compiler('c') }}
   host:
+    - zlib
     - unixodbc
     - mysql-devel {{ version }}
 
