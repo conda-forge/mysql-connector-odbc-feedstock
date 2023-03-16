@@ -1,7 +1,7 @@
 conda_forge_output_validation: true
-build_platform:
-  linux_aarch64: linux_64
-  linux_ppc64le: linux_64
+provider:
+  linux_aarch64: azure
+  linux_ppc64le: azure
 bot: {check_solvable: true}
 github:
   branch_name: main
