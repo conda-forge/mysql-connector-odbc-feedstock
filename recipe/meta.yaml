@@ -1,5 +1,5 @@
 {% set name = "mysql-connector-odbc" %}
-{% set version = "8.0.27" %}
+{% set version = "8.0.32" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://dev.mysql.com/get/Downloads/Connector-ODBC/{{ name }}-{{ version }}-src.tar.gz
-  sha256: 6f9f8c1b89e09423646919352486338d74db579f3d43b2ebad5209ff87aa784c
+  sha256: 068f275afccc69e2ea5ea0d59ea0ecf0380710f9a9f6158e4751f07d5eec84a2
 
 build:
   number: 0
@@ -22,6 +22,7 @@ requirements:
     - unixodbc
     - mysql-devel {{ version }}  # [build_platform != target_platform]
   host:
+    - zlib
     - unixodbc
     - mysql-devel {{ version }}
 
