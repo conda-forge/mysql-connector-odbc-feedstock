@@ -1,0 +1,34 @@
+From 1e9a12bc19419b458067209bc99912df03dc2ad5 Mon Sep 17 00:00:00 2001
+From: Jonas Haag <jonas@lophus.org>
+Date: Sun, 9 Jul 2023 20:54:04 +0200
+Subject: [PATCH 2/2] Fix type cast
+
+---
+ test/my_cursor.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/test/my_cursor.c b/test/my_cursor.c
+index c23855a..765438c 100644
+--- a/test/my_cursor.c
++++ b/test/my_cursor.c
+@@ -3131,7 +3131,7 @@ DECLARE_TEST(t_dae_setpos_insert)
+   expect_stmt(hstmt, SQLSetPos(hstmt, 0, SQL_ADD, SQL_LOCK_NO_CHANGE),
+               SQL_NEED_DATA);
+   expect_stmt(hstmt, SQLParamData(hstmt, &paramptr), SQL_NEED_DATA);
+-  is_num(paramptr, ((SQLCHAR *)holder + offset));
++  is_num((long long)paramptr, (long long)((SQLCHAR *)holder + offset));
+   ok_stmt(hstmt, SQLPutData(hstmt, data[1].y, 10));
+   ok_stmt(hstmt, SQLParamData(hstmt, &paramptr));
+ 
+@@ -3185,7 +3185,7 @@ DECLARE_TEST(t_dae_setpos_update)
+   expect_stmt(hstmt, SQLSetPos(hstmt, 0, SQL_UPDATE, SQL_LOCK_NO_CHANGE),
+               SQL_NEED_DATA);
+   expect_stmt(hstmt, SQLParamData(hstmt, &paramptr), SQL_NEED_DATA);
+-  is_num(paramptr, holder);
++  is_num((long long)paramptr, (long long)holder);
+   ok_stmt(hstmt, SQLPutData(hstmt, yval, 10));
+   ok_stmt(hstmt, SQLParamData(hstmt, &paramptr));
+ 
+-- 
+2.41.0
+
