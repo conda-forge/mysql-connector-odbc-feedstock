@@ -8,6 +8,10 @@ declare -a _cmake_args
 
 _cmake_args+=(-S${SRC_DIR})
 _cmake_args+=(-GNinja)
+_cmake_args+=(-DCMAKE_CXX_STANDARD=17)
+_cmake_args+=(-DCMAKE_BUILD_TYPE=Release)
+_cmake_args+=(-DCOMPILATION_COMMENT=conda-forge)
+_cmake_args+=(-DCMAKE_FIND_FRAMEWORK=LAST)
 _cmake_args+=(-DWITH_UNIXODBC=ON)
 _cmake_args+=(-DCMAKE_INSTALL_PREFIX=${PREFIX})
 _cmake_args+=(-DMYSQLCLIENT_STATIC_LINKING=OFF)
