@@ -15,7 +15,7 @@ _cmake_args+=(-DBUNDLE_DEPENDENCIES=OFF)
 _cmake_args+=(-DDISABLE_GUI=ON)
 
 # Copy-pasted from https://github.com/conda-forge/mysql-feedstock/blob/master/recipe/build.sh
-if [[ $target_platform == osx-arm64 ]] && [[ $CONDA_BUILD_CROSS_COMPILATION == 1 ]]; then
+if [[ $target_platform == osx-arm64 ]] && [[ ${CONDA_BUILD_CROSS_COMPILATION:0} == 1 ]]; then
     # Build all intermediate codegen binaries for the build platform
     # xref: https://cmake.org/pipermail/cmake/2013-January/053252.html
     env -u SDKROOT -u CONDA_BUILD_SYSROOT -u CMAKE_PREFIX_PATH \
