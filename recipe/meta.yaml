@@ -8,6 +8,8 @@ package:
 source:
   url: https://dev.mysql.com/get/Downloads/Connector-ODBC/{{ name }}-{{ version }}-src.tar.gz
   sha256: f3e67366c97da82700bd4e3272c73d91aada6d4995bb0eac3d5c2ec2c88825dd
+  patches:
+    - patches/0001-Add-missing-includes.patch
 
 build:
   number: 0

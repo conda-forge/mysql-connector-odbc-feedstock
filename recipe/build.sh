@@ -2,8 +2,9 @@
 
 set -euxo pipefail
 
-mkdir build
+mkdir -p build
 pushd build
+export CFLAGS="${CFLAGS} -Wno-int-conversion"
 cmake ${CMAKE_ARGS} \
 	-GNinja \
 	-DWITH_UNIXODBC=ON \
