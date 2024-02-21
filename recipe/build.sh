@@ -7,8 +7,8 @@ pushd build
 
 export CFLAGS="${CFLAGS} -Wno-int-conversion"
 
-if [[ $target_platform == osx-arm64 ]] && [[ $CONDA_BUILD_CROSS_COMPILATION == 1 ]]; then
-  export CMAKE_ARGS="${CMAKE_ARGS} -DHAVE_CLOCK_GETTIME_EXITCODE=0 -DHAVE_CLOCK_REALTIME_EXITCODE=0 -DSTACK_DIRECTION=1"
+if [[ $target_platform == osx-arm64 ]] && [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == 1 ]]; then
+  export CMAKE_ARGS="${CMAKE_ARGS} -DHAVE_CLOCK_GETTIME_EXITCODE=0 -DHAVE_CLOCK_REALTIME_EXITCODE=0 -DSTACK_DIRECTION=1 -DHAVE_LLVM_LIBCPP_EXITCODE=0"
 fi
 
 cmake ${CMAKE_ARGS} \
