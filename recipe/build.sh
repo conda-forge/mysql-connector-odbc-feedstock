@@ -22,6 +22,8 @@ if [[ $target_platform == osx-arm64 ]] && [[ "${CONDA_BUILD_CROSS_COMPILATION:-0
         unset CPPFLAGS
         unset CFLAGS
         unset LDFLAGS
+	mkdir -p build-build
+	pushd build-build
         cmake \
             -GNinja \
             -DWITH_UNIXODBC=ON \
@@ -33,10 +35,11 @@ if [[ $target_platform == osx-arm64 ]] && [[ "${CONDA_BUILD_CROSS_COMPILATION:-0
             -DCMAKE_C_COMPILER=$CC_FOR_BUILD \
             -DCMAKE_CXX_COMPILER=$CXX_FOR_BUILD \
             -DProtobuf_PROTOC_EXECUTABLE=$BUILD_PREFIX/bin/protoc \
-            -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath,$BUILD_PREFIX/lib -L$BUILD_PREFIX/lib"
+            -DCMAKE_EXE_LINKER_FLAGS="-Wl,-rpath,$BUILD_PREFIX/lib -L$BUILD_PREFIX/lib" \
             ..
         ninja
-	cp ./build/bin/uca9dump ${BUILD_PREFIX}/bin
+	cp ./bin/uca9dump ${BUILD_PREFIX}/bin
+	popd
     )
 fi
 
