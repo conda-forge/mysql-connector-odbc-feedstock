@@ -1,5 +1,5 @@
 {% set name = "mysql-connector-odbc" %}
-{% set version = "8.0.33" %}
+{% set version = "8.2.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://dev.mysql.com/get/Downloads/Connector-ODBC/{{ name }}-{{ version }}-src.tar.gz
-  sha256: f3e67366c97da82700bd4e3272c73d91aada6d4995bb0eac3d5c2ec2c88825dd
+  sha256: 9141685d85f6cfccc13778a0d424e6ed05620e02936438de1cfdfc81c63c8e64
   patches:
     - patches/0001-Add-missing-includes.patch
 
