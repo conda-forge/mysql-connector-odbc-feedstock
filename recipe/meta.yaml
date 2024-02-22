@@ -21,6 +21,9 @@ requirements:
     - ninja
     - {{ compiler('cxx') }}
     - {{ compiler('c') }}
+    - zlib                       # [target_platform != build_platform]
+    - unixodbc                   # [target_platform != build_platform]
+    - mysql-devel {{ version }}  # [target_platform != build_platform]
   host:
     - zlib
     - unixodbc
