@@ -2,9 +2,6 @@
 
 set -euxo pipefail
 
-mkdir -p build
-pushd build
-
 export CFLAGS="${CFLAGS} -Wno-int-conversion"
 
 if [[ $target_platform == osx-arm64 ]] && [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == 1 ]]; then
@@ -42,6 +39,9 @@ if [[ $target_platform == osx-arm64 ]] && [[ "${CONDA_BUILD_CROSS_COMPILATION:-0
 	popd
     )
 fi
+
+mkdir -p build
+pushd build
 
 cmake ${CMAKE_ARGS} \
 	-GNinja \
