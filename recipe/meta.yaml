@@ -1,5 +1,5 @@
 {% set name = "mysql-connector-odbc" %}
-{% set version = "8.3.0" %}
+{% set version = "9.1.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://dev.mysql.com/get/Downloads/Connector-ODBC/{{ name }}-{{ version }}-src.tar.gz
-  sha256: 4ab957484c1eec47da5044e9cc7f18c12c832ace32148a46dd2b45a3a096f776
+  sha256: 1b412787f48fc452c93f94fcaadc1837f2b1a4ac8f35b7dbd7840db9e4a67f29
   patches:
     - patches/0001-Add-missing-includes.patch
 
@@ -21,6 +21,7 @@ requirements:
     - ninja
     - {{ compiler('cxx') }}
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - zlib                       # [target_platform != build_platform]
     - unixodbc                   # [target_platform != build_platform]
     - mysql-devel {{ version }}  # [target_platform != build_platform]
