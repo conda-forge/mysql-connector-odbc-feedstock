@@ -27,7 +27,7 @@ requirements:
       then: zlib
     - if: target_platform != build_platform
       then: unixodbc
-    - if: target_platform != build_platform or target_platform != build_platform
+    - if: target_platform != build_platform
       then: mysql-devel 9.3.0.*
   host:
     - zlib
