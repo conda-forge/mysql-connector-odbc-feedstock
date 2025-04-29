@@ -5,7 +5,7 @@ set -euxo pipefail
 export CFLAGS="${CFLAGS} -Wno-int-conversion"
 
 if [[ "${target_platform}" == linux-* ]]; then
-    export CMAKE_ARGS="${CMAKE_ARGS} -DHAVE_CLOCK_GETTIME_EXITCODE=0 -DHAVE_CLOCK_REALTIME_EXITCODE=0 -DSTACK_DIRECTION=-1"
+    export CMAKE_ARGS="${CMAKE_ARGS} -DHAVE_CLOCK_GETTIME_EXITCODE=0 -DHAVE_CLOCK_REALTIME_EXITCODE=0 -DSTACK_DIRECTION=-1 -DHAVE_LLVM_LIBCPP_EXITCODE=1"
 elif [[ "${target_platform}" == "osx-arm64" ]]; then
     export CMAKE_ARGS="${CMAKE_ARGS} -DHAVE_CLOCK_GETTIME_EXITCODE=0 -DHAVE_CLOCK_REALTIME_EXITCODE=0 -DSTACK_DIRECTION=1 -DHAVE_LLVM_LIBCPP_EXITCODE=0"
 fi
@@ -43,6 +43,7 @@ if [[ "${target_platform}" != "${build_platform}" ]]; then
 
 	# We don't want to use this to detect the native mysql
 	rm $BUILD_PREFIX/bin/mysql_config
+	rm $BUILD_PREFIX/bin/odbc_config
     )
 fi
 
