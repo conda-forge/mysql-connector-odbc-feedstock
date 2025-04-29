@@ -11,8 +11,6 @@ package:
 source:
   url: https://github.com/mysql/mysql-connector-odbc/archive/refs/tags/${{ version }}.tar.gz
   sha256: c47040918f26200b6e003223a7de43ac758be430afb1107851395b7398e2dd04
-  patches:
-    - patches/0001-Add-missing-includes.patch
 
 build:
   number: 0
