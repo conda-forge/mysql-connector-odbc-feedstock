@@ -53,6 +53,6 @@ cmake ${CMAKE_ARGS} \
 	..
 ninja
 # Manually install libraries as `ninja install` also installs the tests
-cp lib/libmyodbc8w.so $PREFIX/lib/libmyodbc8w${SHLIB_EXT}
-cp lib/libmyodbc8a.so $PREFIX/lib/libmyodbc8a${SHLIB_EXT}
+cp lib/libmyodbc9w.so $PREFIX/lib/libmyodbc9w${SHLIB_EXT}
+cp lib/libmyodbc9a.so $PREFIX/lib/libmyodbc9a${SHLIB_EXT}
 cp bin/myodbc-installer $PREFIX/bin/myodbc-installer

@@ -9,8 +9,8 @@ package:
   version: ${{ version }}
 
 source:
-  url: https://dev.mysql.com/get/Downloads/Connector-ODBC/${{ name }}-${{ version }}-src.tar.gz
-  sha256: 42df023046c343a647c840750697e142b3ca633a4c03fc5c6b22ad5b54340471
+  url: https://github.com/mysql/mysql-connector-odbc/archive/refs/tags/${{ version }}.tar.gz
+  sha256: c47040918f26200b6e003223a7de43ac758be430afb1107851395b7398e2dd04
   patches:
     - patches/0001-Add-missing-includes.patch
 
@@ -39,9 +39,9 @@ requirements:
 tests:
   - script:
       - if: unix
-        then: "test -f \"$PREFIX/lib/libmyodbc8w${SHLIB_EXT}\""
+        then: "test -f \"$PREFIX/lib/libmyodbc9w${SHLIB_EXT}\""
       - if: unix
-        then: "test -f \"$PREFIX/lib/libmyodbc8a${SHLIB_EXT}\""
+        then: "test -f \"$PREFIX/lib/libmyodbc9a${SHLIB_EXT}\""
       - if: unix
         then: "test -f \"$PREFIX/bin/myodbc-installer\""
 
