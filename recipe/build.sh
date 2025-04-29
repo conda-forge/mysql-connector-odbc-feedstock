@@ -17,8 +17,8 @@ if [[ $target_platform == osx-arm64 ]] && [[ "${CONDA_BUILD_CROSS_COMPILATION:-0
         unset CMAKE_PREFIX_PATH
         unset CXXFLAGS
         unset CPPFLAGS
-	export CFLAGS="-Wno-int-conversion"
-        unset LDFLAGS
+        export CFLAGS="-Wno-int-conversion"
+        export LDFLAGS="-L${BUILD_PREFIX}/lib"
 	mkdir -p build-build
 	pushd build-build
         cmake \
