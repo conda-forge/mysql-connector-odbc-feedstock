@@ -41,9 +41,11 @@ if [[ "${target_platform}" != "${build_platform}" ]]; then
 	cp ./bin/uca9dump ${BUILD_PREFIX}/bin
 	popd
 
-	# We don't want to use this to detect the native mysql
-	rm $BUILD_PREFIX/bin/mysql_config
-	rm $BUILD_PREFIX/bin/odbc_config
+        if [[ "${target_platform}" == linux-* ]]; then
+          # We don't want to use this to detect the native mysql
+          rm $BUILD_PREFIX/bin/mysql_config
+          rm $BUILD_PREFIX/bin/odbc_config
+        fi
     )
 fi
 
