@@ -4,9 +4,12 @@ set -euxo pipefail
 
 export CFLAGS="${CFLAGS} -Wno-int-conversion"
 
-if [[ $target_platform == osx-arm64 ]] && [[ "${CONDA_BUILD_CROSS_COMPILATION:-0}" == 1 ]]; then
+if [[ "${target_platform}" == linux-* ]]; then
+    export CMAKE_ARGS="${CMAKE_ARGS} -DHAVE_CLOCK_GETTIME_EXITCODE=0 -DHAVE_CLOCK_REALTIME_EXITCODE=0 -DSTACK_DIRECTION=-1 -DHAVE_LLVM_LIBCPP_EXITCODE=1"
+elif [[ "${target_platform}" == "osx-arm64" ]]; then
     export CMAKE_ARGS="${CMAKE_ARGS} -DHAVE_CLOCK_GETTIME_EXITCODE=0 -DHAVE_CLOCK_REALTIME_EXITCODE=0 -DSTACK_DIRECTION=1 -DHAVE_LLVM_LIBCPP_EXITCODE=0"
-
+fi
+if [[ "${target_platform}" != "${build_platform}" ]]; then
     # Build all intermediate codegen binaries for the build platform
     # xref: https://cmake.org/pipermail/cmake/2013-January/053252.html
     export OPENSSL_ROOT_DIR=$BUILD_PREFIX
@@ -17,8 +20,8 @@ if [[ $target_platform == osx-arm64 ]] && [[ "${CONDA_BUILD_CROSS_COMPILATION:-0
         unset CMAKE_PREFIX_PATH
         unset CXXFLAGS
         unset CPPFLAGS
-	export CFLAGS="-Wno-int-conversion"
-        unset LDFLAGS
+        export CFLAGS="-Wno-int-conversion"
+        export LDFLAGS="-L${BUILD_PREFIX}/lib"
 	mkdir -p build-build
 	pushd build-build
         cmake \
@@ -37,6 +40,12 @@ if [[ $target_platform == osx-arm64 ]] && [[ "${CONDA_BUILD_CROSS_COMPILATION:-0
         ninja
 	cp ./bin/uca9dump ${BUILD_PREFIX}/bin
 	popd
+
+        if [[ "${target_platform}" == linux-* ]]; then
+          # We don't want to use this to detect the native mysql
+          rm $BUILD_PREFIX/bin/mysql_config
+          rm $BUILD_PREFIX/bin/odbc_config
+        fi
     )
 fi
 
@@ -53,6 +62,6 @@ cmake ${CMAKE_ARGS} \
 	..
 ninja
 # Manually install libraries as `ninja install` also installs the tests
-cp lib/libmyodbc8w.so $PREFIX/lib/libmyodbc8w${SHLIB_EXT}
-cp lib/libmyodbc8a.so $PREFIX/lib/libmyodbc8a${SHLIB_EXT}
+cp lib/libmyodbc9w.so $PREFIX/lib/libmyodbc9w${SHLIB_EXT}
+cp lib/libmyodbc9a.so $PREFIX/lib/libmyodbc9a${SHLIB_EXT}
 cp bin/myodbc-installer $PREFIX/bin/myodbc-installer

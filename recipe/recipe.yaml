@@ -1,0 +1,55 @@
+schema_version: 1
+
+context:
+  name: mysql-connector-odbc
+  version: 9.3.0
+
+package:
+  name: ${{ name|lower }}
+  version: ${{ version }}
+
+source:
+  url: https://github.com/mysql/mysql-connector-odbc/archive/refs/tags/${{ version }}.tar.gz
+  sha256: c47040918f26200b6e003223a7de43ac758be430afb1107851395b7398e2dd04
+
+build:
+  number: 0
+  skip: win
+
+requirements:
+  build:
+    - cmake
+    - ninja
+    - ${{ compiler('cxx') }}
+    - ${{ compiler('c') }}
+    - ${{ stdlib("c") }}
+    - if: target_platform != build_platform
+      then: zlib
+    - if: target_platform != build_platform
+      then: unixodbc
+    - if: target_platform != build_platform
+      then: mysql-devel 9.3.0.*
+  host:
+    - zlib
+    - unixodbc
+    - mysql-devel 9.3.0.*
+
+tests:
+  - script:
+      - if: unix
+        then: "test -f \"$PREFIX/lib/libmyodbc9w${SHLIB_EXT}\""
+      - if: unix
+        then: "test -f \"$PREFIX/lib/libmyodbc9a${SHLIB_EXT}\""
+      - if: unix
+        then: "test -f \"$PREFIX/bin/myodbc-installer\""
+
+about:
+  license: GPL-2.0-or-later WITH Universal-FOSS-exception-1.0
+  license_file: LICENSE.txt
+  summary: MySQL Connector/ODBC, the ODBC interface for communicating with MySQL servers.
+  homepage: https://dev.mysql.com/doc/connector-odbc/en/
+
+extra:
+  recipe-maintainers:
+    - jonashaag
+    - xhochy
