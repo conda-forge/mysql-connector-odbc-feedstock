@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: mysql-connector-odbc
-  version: 9.3.0
+  version: "9.4.0"
 
 package:
   name: ${{ name|lower }}
@@ -10,10 +10,10 @@ package:
 
 source:
   url: https://github.com/mysql/mysql-connector-odbc/archive/refs/tags/${{ version }}.tar.gz
-  sha256: c47040918f26200b6e003223a7de43ac758be430afb1107851395b7398e2dd04
+  sha256: 424645328f7beeeb63fea4672ce8c551084490cf49c51093110f13f0d1de2fa5
 
 build:
-  number: 1
+  number: 0
   skip: win
 
 requirements:
