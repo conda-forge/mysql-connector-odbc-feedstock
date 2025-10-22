@@ -7,7 +7,7 @@
 
 [project]
 name = "mysql-connector-odbc-feedstock"
-version = "3.48.1"  # conda-smithy version used to generate this file
+version = "3.52.3"  # conda-smithy version used to generate this file
 description = "Pixi configuration for conda-forge/mysql-connector-odbc-feedstock"
 authors = ["@conda-forge/mysql-connector-odbc"]
 channels = ["conda-forge"]
@@ -58,6 +58,7 @@ description = "List contents of mysql-connector-odbc-feedstock packages built fo
 
 [feature.smithy.dependencies]
 conda-smithy = "*"
+shellcheck = "*"
 [feature.smithy.tasks.build-locally]
 cmd = "python ./build-locally.py"
 description = "Build packages locally using the same setup scripts used in conda-forge's CI"
