@@ -1,0 +1,98 @@
+From 1ceb69dc977c4b508fd0be7ad9bcc2c3d6045f9d Mon Sep 17 00:00:00 2001
+From: "Uwe L. Korn" <uwe.korn@quantco.com>
+Date: Mon, 22 Dec 2025 10:07:50 +0100
+Subject: [PATCH] Added a std::char_traits<unsigned short> specialization
+
+---
+ MYODBC_MYSQL.h | 78 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 78 insertions(+)
+
+diff --git a/MYODBC_MYSQL.h b/MYODBC_MYSQL.h
+index a0238f4..8c2e188 100644
+--- a/MYODBC_MYSQL.h
++++ b/MYODBC_MYSQL.h
+@@ -29,6 +29,84 @@
+ #ifndef MYODBC_MYSQL_H
+ #define MYODBC_MYSQL_H
+ 
++// Provide char_traits specialization for SQLWCHAR (unsigned short) on platforms
++// where the standard library doesn't provide one (e.g., macOS with libc++).
++// This MUST appear before any includes that might use std::basic_string<unsigned short>.
++#if !defined(_WIN32)
++#include <cstdint>
++#include <cstring>
++#include <cwchar>
++#include <string>
++namespace std {
++template <>
++struct char_traits<unsigned short> {
++  using char_type = unsigned short;
++  using int_type = int;
++  using off_type = streamoff;
++  using pos_type = streampos;
++  using state_type = mbstate_t;
++
++  static void assign(char_type& c1, const char_type& c2) noexcept { c1 = c2; }
++  static constexpr bool eq(char_type c1, char_type c2) noexcept { return c1 == c2; }
++  static constexpr bool lt(char_type c1, char_type c2) noexcept { return c1 < c2; }
++
++  static int compare(const char_type* s1, const char_type* s2, size_t n) {
++    for (size_t i = 0; i < n; ++i) {
++      if (lt(s1[i], s2[i])) return -1;
++      if (lt(s2[i], s1[i])) return 1;
++    }
++    return 0;
++  }
++
++  static size_t length(const char_type* s) {
++    size_t len = 0;
++    while (!eq(s[len], char_type())) ++len;
++    return len;
++  }
++
++  static const char_type* find(const char_type* s, size_t n, const char_type& a) {
++    for (size_t i = 0; i < n; ++i) {
++      if (eq(s[i], a)) return s + i;
++    }
++    return nullptr;
++  }
++
++  static char_type* move(char_type* dest, const char_type* src, size_t n) {
++    if (n == 0) return dest;
++    return static_cast<char_type*>(memmove(dest, src, n * sizeof(char_type)));
++  }
++
++  static char_type* copy(char_type* dest, const char_type* src, size_t n) {
++    if (n == 0) return dest;
++    return static_cast<char_type*>(memcpy(dest, src, n * sizeof(char_type)));
++  }
++
++  static char_type* assign(char_type* s, size_t n, char_type a) {
++    for (size_t i = 0; i < n; ++i) s[i] = a;
++    return s;
++  }
++
++  static constexpr int_type not_eof(int_type c) noexcept {
++    return eq_int_type(c, eof()) ? ~eof() : c;
++  }
++
++  static constexpr char_type to_char_type(int_type c) noexcept {
++    return static_cast<char_type>(c);
++  }
++
++  static constexpr int_type to_int_type(char_type c) noexcept {
++    return static_cast<int_type>(c);
++  }
++
++  static constexpr bool eq_int_type(int_type c1, int_type c2) noexcept {
++    return c1 == c2;
++  }
++
++  static constexpr int_type eof() noexcept { return static_cast<int_type>(-1); }
++};
++}  // namespace std
++#endif
++
+ #define DONT_DEFINE_VOID
+ 
+ #define my_bool bool
