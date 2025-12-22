@@ -11,6 +11,9 @@ package:
 source:
   url: https://github.com/mysql/mysql-connector-odbc/archive/refs/tags/${{ version }}.tar.gz
   sha256: 6792ca057a55c56e041cc71add96cf086e996b5bc6288e02f57e07ab9255bc7a
+  patches:
+    - if: osx
+      then: 0001-Added-a-std-char_traits-unsigned-short-specializatio.patch
 
 build:
   number: 0
@@ -27,11 +30,11 @@ requirements:
       then:
         - zlib
         - unixodbc
-        - mysql-devel 9.3.0.*
+        - mysql-devel ${{ version }}.*
   host:
     - zlib
     - unixodbc
-    - mysql-devel 9.3.0.*
+    - mysql-devel ${{ version }}.*
 
 tests:
   - script:
