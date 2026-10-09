@@ -2,7 +2,7 @@ schema_version: 1
 
 context:
   name: mysql-connector-odbc
-  version: "9.7.0"
+  version: "26.7.1"
 
 package:
   name: ${{ name|lower }}
@@ -10,13 +10,13 @@ package:
 
 source:
   url: https://github.com/mysql/mysql-connector-odbc/archive/refs/tags/${{ version }}.tar.gz
-  sha256: 9b2a57b32e952b012363144a96c83aac40c07c889ccf4a2e9c1db1eb90572008
+  sha256: 4de3b0654925d732719a666185f7db937f0517b342f2b0202c07852b4a0f2ccc
   patches:
     - if: osx
       then: 0001-Added-a-std-char_traits-unsigned-short-specializatio.patch
 
 build:
-  number: 1
+  number: 0
   skip: win
 
 requirements:
